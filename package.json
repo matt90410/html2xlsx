@@ -1,16 +1,111 @@
 {
-  "name": "html2xlsx",
-  "version": "0.4.0",
-  "description": "Transform html to excel (just support xlsx)",
-  "main": "lib/index.js",
-  "scripts": {
-    "lint": "eslint --ext .js src test",
-    "build": "rimraf lib && NODE_ENV=production babel --out-dir=lib src",
-    "prepublish": "npm run build",
-    "test": "NODE_ENV=test nyc mocha --no-timeouts",
-    "report": "nyc report --reporter=html",
-    "coveralls": "nyc report --reporter=text-lcov | coveralls"
+  "_args": [
+    [
+      {
+        "raw": "html2xlsx",
+        "scope": null,
+        "escapedName": "html2xlsx",
+        "name": "html2xlsx",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "C:\\dev\\essential"
+    ]
+  ],
+  "_from": "html2xlsx@latest",
+  "_id": "html2xlsx@0.3.0",
+  "_inCache": true,
+  "_location": "/html2xlsx",
+  "_nodeVersion": "6.5.0",
+  "_npmOperationalInternal": {
+    "host": "packages-18-east.internal.npmjs.com",
+    "tmp": "tmp/html2xlsx-0.3.0.tgz_1484798502964_0.3866400634869933"
   },
+  "_npmUser": {
+    "name": "d-band",
+    "email": "c_it@cnood.com"
+  },
+  "_npmVersion": "3.10.8",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "html2xlsx",
+    "scope": null,
+    "escapedName": "html2xlsx",
+    "name": "html2xlsx",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/html2xlsx/-/html2xlsx-0.3.0.tgz",
+  "_shasum": "2a249762c834056d880e91cfb9d6c68da4ec6711",
+  "_shrinkwrap": null,
+  "_spec": "html2xlsx",
+  "_where": "C:\\dev\\essential",
+  "author": {
+    "name": "d-band"
+  },
+  "bugs": {
+    "url": "https://github.com/matt90410/html2xlsx/issues"
+  },
+  "dependencies": {
+    "better-xlsx": "^0.3.0",
+    "cheerio": "^0.22.0",
+    "cssstyle": "^0.2.37",
+    "juice": "^4.0.2",
+    "moment": "^2.17.1",
+    "tinycolor2": "^1.4.1"
+  },
+  "description": "Transform html to excel (just support xlsx)",
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-eslint": "^7.1.1",
+    "babel-plugin-istanbul": "^3.0.0",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-preset-env": "^1.1.4",
+    "babel-preset-stage-2": "^6.18.0",
+    "babel-register": "^6.18.0",
+    "chai": "^3.5.0",
+    "coveralls": "^2.11.14",
+    "eslint": "^3.9.1",
+    "eslint-config-standard": "^6.2.1",
+    "eslint-plugin-promise": "^3.3.1",
+    "eslint-plugin-standard": "^2.0.1",
+    "mocha": "^3.1.2",
+    "nyc": "^10.0.0",
+    "pre-commit": "^1.1.3",
+    "rimraf": "^2.5.4",
+    "stream-equal": "^0.1.11"
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "2a249762c834056d880e91cfb9d6c68da4ec6711",
+    "tarball": "https://registry.npmjs.org/html2xlsx/-/html2xlsx-0.3.0.tgz"
+  },
+  "engines": {
+    "node": ">= 4"
+  },
+  "gitHead": "d458907e18c445a2daf1ad0c889bbb8823c5f5de",
+  "homepage": "https://github.com/matt90410/html2xlsx#readme",
+  "keywords": [
+    "xlsx",
+    "excel",
+    "html",
+    "table"
+  ],
+  "license": "MIT",
+  "main": "lib/index.js",
+  "maintainers": [
+    {
+      "name": "d-band",
+      "email": "c_it@cnood.com"
+    }
+  ],
+  "name": "html2xlsx",
   "nyc": {
     "include": [
       "src/**/*.js"
@@ -21,56 +116,22 @@
     "sourceMap": false,
     "instrument": false
   },
+  "optionalDependencies": {},
   "pre-commit": [
     "lint"
   ],
-  "devDependencies": {
-    "babel-cli": "^6.18.0",
-    "babel-eslint": "^8.0.0",
-    "babel-plugin-istanbul": "^4.1.3",
-    "babel-plugin-transform-decorators-legacy": "^1.3.4",
-    "babel-preset-env": "^1.1.4",
-    "babel-preset-stage-2": "^6.18.0",
-    "babel-register": "^6.18.0",
-    "chai": "^4.0.0",
-    "coveralls": "^3.0.0",
-    "eslint": "^4.1.0",
-    "eslint-config-standard": "^10.2.1",
-    "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-node": "^5.0.0",
-    "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-standard": "^3.0.1",
-    "mocha": "^4.0.0",
-    "nyc": "^11.0.3",
-    "pre-commit": "^1.1.3",
-    "rimraf": "^2.5.4",
-    "stream-equal": "^1.0.0"
-  },
+  "readme": "ERROR: No README data found!",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/matt90410/html2xlsx.git"
   },
-  "engines": {
-    "node": ">= 4"
+  "scripts": {
+    "build": "rimraf lib && NODE_ENV=production babel --out-dir=lib src",
+    "coveralls": "nyc report --reporter=text-lcov | coveralls",
+    "lint": "eslint --ext .js src test",
+    "prepublish": "npm run build",
+    "report": "nyc report --reporter=html",
+    "test": "NODE_ENV=test nyc mocha --no-timeouts"
   },
-  "keywords": [
-    "xlsx",
-    "excel",
-    "html",
-    "table"
-  ],
-  "author": "d-band",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/matt90410/html2xlsx/issues"
-  },
-  "homepage": "https://github.com/matt90410/html2xlsx#readme",
-  "dependencies": {
-    "better-xlsx": "^0.4.0",
-    "cheerio": "^1.0.0-rc.1",
-    "cssstyle": "^0.2.37",
-    "juice": "^4.0.2",
-    "moment": "^2.17.1",
-    "tinycolor2": "^1.4.1"
-  }
+  "version": "0.3.0"
 }
