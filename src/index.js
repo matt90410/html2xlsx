@@ -103,6 +103,10 @@ module.exports = (html, callback, options = {}) => {
           if (css.verticalAlign && vMap[css.verticalAlign]) {
             style.align.v = vMap[css.verticalAlign];
           }
+		  
+          //text is wrapped inside cells
+          style.align.wrapText = 1;
+		  
           // Cell
           const cell = sheet.cell(hi, offsets[hi]);
           // Set value type
@@ -111,6 +115,10 @@ module.exports = (html, callback, options = {}) => {
           switch (type.toLowerCase()) {
             case 'number':
               cell.setNumber(text);
+              break;
+            case 'money':
+              cell.setNumber(text);
+              cell.numFmt = '£#,##0.00';
               break;
             case 'bool':
               cell.setBool(text === 'true' || text === '1');
@@ -143,7 +151,8 @@ module.exports = (html, callback, options = {}) => {
             offsets[hi + r] += cs;
           }
         });
-        sheet.rows[hi].setHeightCM(maxH * 0.03528);
+        // removed so that calls height is automatic
+        //     sheet.rows[hi].setHeightCM(maxH * 0.03528);
       });
       // Set col width
       for (let i = 0; i < maxW.length; i++) {
