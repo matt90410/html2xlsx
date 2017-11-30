@@ -1,53 +1,93 @@
-import color from 'tinycolor2';
-import { CSSStyleDeclaration } from 'cssstyle';
+'use strict';
 
-export function color2argb (c) {
-  const rgba = color(c).toHex8();
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.color2argb = color2argb;
+exports.size2pt = size2pt;
+exports.size2px = size2px;
+exports.css2style = css2style;
+exports.getBorder = getBorder;
+
+var _tinycolor = require('tinycolor2');
+
+var _tinycolor2 = _interopRequireDefault(_tinycolor);
+
+var _cssstyle = require('cssstyle');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function color2argb(c) {
+  var rgba = (0, _tinycolor2.default)(c).toHex8();
   return rgba.substr(6) + rgba.substr(0, 6);
 }
 
-export function size2pt (s) {
-  const num = size2px(s);
+function size2pt(s) {
+  var num = size2px(s);
   if (num > 0) {
     return num * 72 / 96;
   }
   return 12;
 }
 
-export function size2px (s) {
+function size2px(s) {
   if (!s) return 0;
 
-  const pt = s.match(/([.\d]+)pt/i);
+  var pt = s.match(/([.\d]+)pt/i);
   if (pt && pt.length === 2) {
     return parseFloat(pt[1], 10) * 96 / 72;
   }
-  const em = s.match(/([.\d]+)em/i);
+  var em = s.match(/([.\d]+)em/i);
   if (em && em.length === 2) {
     return parseFloat(em[1], 10) * 16;
   }
-  const px = s.match(/([.\d]+)px/i);
+  var px = s.match(/([.\d]+)px/i);
   if (px && px.length === 2) {
     return parseFloat(px[1], 10);
   }
-  const pe = s.match(/([.\d]+)%/i);
+  var pe = s.match(/([.\d]+)%/i);
   if (pe && pe.length === 2) {
-    return (parseFloat(pe[1], 10) / 100) * 16;
+    return parseFloat(pe[1], 10) / 100 * 16;
   }
   return 0;
 }
 
-export function css2style (css = {}) {
-  const style = new CSSStyleDeclaration();
-  for (const k of Object.keys(css)) {
-    style[k] = css[k];
+function css2style() {
+  var css = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+  var style = new _cssstyle.CSSStyleDeclaration();
+  var _iteratorNormalCompletion = true;
+  var _didIteratorError = false;
+  var _iteratorError = undefined;
+
+  try {
+    for (var _iterator = Object.keys(css)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+      var k = _step.value;
+
+      style[k] = css[k];
+    }
+  } catch (err) {
+    _didIteratorError = true;
+    _iteratorError = err;
+  } finally {
+    try {
+      if (!_iteratorNormalCompletion && _iterator.return) {
+        _iterator.return();
+      }
+    } finally {
+      if (_didIteratorError) {
+        throw _iteratorError;
+      }
+    }
   }
+
   return style;
 }
 
-export function getBorder (css, type) {
-  let color = css[`border-${type}-color`];
-  let style = css[`border-${type}-style`];
-  let width = css[`border-${type}-width`];
+function getBorder(css, type) {
+  var color = css[`border-${ type }-color`];
+  var style = css[`border-${ type }-style`];
+  var width = css[`border-${ type }-width`];
 
   if (!color) return null;
 
