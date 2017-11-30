@@ -48,7 +48,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/d-band/html2xlsx.git"
+    "url": "git+https://github.com/matt90410/html2xlsx.git"
   },
   "engines": {
     "node": ">= 4"
@@ -62,9 +62,9 @@
   "author": "d-band",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/d-band/html2xlsx/issues"
+    "url": "https://github.com/matt90410/html2xlsx/issues"
   },
-  "homepage": "https://github.com/d-band/html2xlsx#readme",
+  "homepage": "https://github.com/matt90410/html2xlsx#readme",
   "dependencies": {
     "better-xlsx": "^0.4.0",
     "cheerio": "^1.0.0-rc.1",
