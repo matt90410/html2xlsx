@@ -1,63 +1,62 @@
 'use strict';
 
-var _betterXlsx = require('better-xlsx');
+const _betterXlsx = require('better-xlsx');
 
-var _betterXlsx2 = _interopRequireDefault(_betterXlsx);
+const _betterXlsx2 = _interopRequireDefault(_betterXlsx);
 
-var _juice = require('juice');
+const _juice = require('juice');
 
-var _juice2 = _interopRequireDefault(_juice);
+const _juice2 = _interopRequireDefault(_juice);
 
-var _cheerio = require('cheerio');
+const _cheerio = require('cheerio');
 
-var _cheerio2 = _interopRequireDefault(_cheerio);
+const _cheerio2 = _interopRequireDefault(_cheerio);
 
-var _moment = require('moment');
+const _moment = require('moment');
 
-var _moment2 = _interopRequireDefault(_moment);
+const _moment2 = _interopRequireDefault(_moment);
 
-var _lib = require('./lib');
+const _lib = require('./lib');
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault (obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 module.exports = function (html, callback) {
-  var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+  const options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
   _juice2.default.juiceResources(html, options.juice || {}, function (err, text) {
     if (err) return callback(err);
 
-    var file = new _betterXlsx2.default.File();
-    var $ = _cheerio2.default.load(text);
+    const file = new _betterXlsx2.default.File();
+    const $ = _cheerio2.default.load(text);
 
     $('table').each(function (ti, table) {
+      //  MSB - added ability to name the tabs
+      const sheetName = $(table).attr('title') ? $(table).attr('title') : `Sheet${ti + 1}`;
+      let sheet = file.addSheet(sheetName);
 
-      //MSB - added ability to name the tabs
-      var sheetName = $(table).attr('title')?$(table).attr('title'):`Sheet${ ti + 1 }`;
-      var sheet = file.addSheet(sheetName);
-
-      var maxW = [];
-      var offsets = [];
+      let maxW = [];
+      let offsets = [];
       $('tr', table).each(function (hi, th) {
         if (offsets[hi] === undefined) {
           offsets[hi] = 0;
         }
-        var maxH = 20; // pt
+        let maxH = 20; // pt
         $('th, td', th).each(function (di, td) {
-          var $td = $(td);
-          var rs = parseInt($td.attr('rowspan'), 10) || 1;
-          var cs = parseInt($td.attr('colspan'), 10) || 1;
+          let $td = $(td);
+          const rs = parseInt($td.attr('rowspan'), 10) || 1;
+          const cs = parseInt($td.attr('colspan'), 10) || 1;
 
-          for (var r = 0; r < rs; r++) {
-            for (var c = 0; c < cs; c++) {
+          for (let r = 0; r < rs; r++) {
+            for (let c = 0; c < cs; c++) {
               sheet.cell(hi + r, offsets[hi] + c);
             }
           }
 
-          var css = (0, _lib.css2style)($td.css());
-          var fsize = (0, _lib.size2pt)(css.fontSize);
+          const css = (0, _lib.css2style)($td.css());
+          const fsize = (0, _lib.size2pt)(css.fontSize);
           // Row Height & Col Width
           if (css.height) {
-            var pt = (0, _lib.size2pt)(css.height);
+            const pt = (0, _lib.size2pt)(css.height);
             if (pt > maxH) {
               maxH = pt / rs;
             }
@@ -66,12 +65,12 @@ module.exports = function (html, callback) {
             if (!maxW[di]) {
               maxW[di] = 10;
             }
-            var tmp = (0, _lib.size2pt)(css.width) / fsize;
+            const tmp = (0, _lib.size2pt)(css.width) / fsize;
             if (maxW[di] < tmp) {
               maxW[di] = tmp / cs;
             }
           }
-          var style = new _betterXlsx2.default.Style();
+          let style = new _betterXlsx2.default.Style();
           // Font
           style.font.color = (0, _lib.color2argb)(css.color || '#000');
           style.font.size = fsize;
@@ -80,34 +79,34 @@ module.exports = function (html, callback) {
           style.font.italic = css.fontStyle === 'italic';
           style.font.underline = css.textDecoration === 'underline';
           // Fill
-          var bgColor = css.backgroundColor;
+          const bgColor = css.backgroundColor;
           if (bgColor) {
             style.fill.patternType = 'solid';
             style.fill.fgColor = (0, _lib.color2argb)(bgColor);
           }
           // Border
-          var left = (0, _lib.getBorder)(css, 'left');
+          const left = (0, _lib.getBorder)(css, 'left');
           if (left) {
             style.border.left = left.style;
             style.border.leftColor = left.color;
           }
-          var right = (0, _lib.getBorder)(css, 'right');
+          const right = (0, _lib.getBorder)(css, 'right');
           if (right) {
             style.border.right = right.style;
             style.border.rightColor = right.color;
           }
-          var top = (0, _lib.getBorder)(css, 'top');
+          const top = (0, _lib.getBorder)(css, 'top');
           if (top) {
             style.border.top = top.style;
             style.border.topColor = top.color;
           }
-          var bottom = (0, _lib.getBorder)(css, 'bottom');
+          const bottom = (0, _lib.getBorder)(css, 'bottom');
           if (bottom) {
             style.border.bottom = bottom.style;
             style.border.bottomColor = bottom.color;
           }
           // Align
-          var hMap = {
+          const hMap = {
             left: 'left',
             right: 'right',
             center: 'center',
@@ -116,7 +115,7 @@ module.exports = function (html, callback) {
           if (css.textAlign && hMap[css.textAlign]) {
             style.align.h = hMap[css.textAlign];
           }
-          var vMap = {
+          const vMap = {
             top: 'top',
             bottom: 'bottom',
             middle: 'center'
@@ -125,20 +124,22 @@ module.exports = function (html, callback) {
             style.align.v = vMap[css.verticalAlign];
           }
 
-          //MSB - added so that text is wrapped inside cells
+          //  MSB - added so that text is wrapped inside cells
           style.align.wrapText = 1;
 
           // Cell
-          var cell = sheet.cell(hi, offsets[hi]);
+          const cell = sheet.cell(hi, offsets[hi]);
           // Set value type
-          var text = $td.text().trim();
-          var type = $td.attr('type') || $td.attr('data-type') || '';
+          const text = $td.text().trim();
+          const type = $td.attr('type') || $td.attr('data-type') || '';
+          const numFormat = $td.attr('data-num-format') || '';
+
           switch (type.toLowerCase()) {
             case 'number':
               cell.setNumber(text);
               break;
             case 'money':
-              //MSB added
+              //  MSB added
               cell.setNumber(text);
               cell.numFmt = '£#,##0.00';
               break;
@@ -158,6 +159,9 @@ module.exports = function (html, callback) {
               cell.value = text;
           }
           cell.style = style;
+          if (numFormat) {
+            cell.numFmt = numFormat;
+          }
 
           if (rs > 1) {
             cell.vMerge = rs - 1;
@@ -166,21 +170,19 @@ module.exports = function (html, callback) {
             cell.hMerge = cs - 1;
           }
 
-          for (var _r = 0; _r < rs; _r++) {
+          for (let _r = 0; _r < rs; _r++) {
             if (offsets[hi + _r] === undefined) {
               offsets[hi + _r] = 0;
             }
             offsets[hi + _r] += cs;
           }
         });
-
-        //MSB removed so that calls height is automatic
+        //  MSB removed so that calls height is automatic
         //     sheet.rows[hi].setHeightCM(maxH * 0.03528);
-
       });
       // Set col width
-      for (var i = 0; i < maxW.length; i++) {
-        var w = maxW[i];
+      for (let i = 0; i < maxW.length; i++) {
+        const w = maxW[i];
         if (w) {
           sheet.col(i).width = w;
         }
