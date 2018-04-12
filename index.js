@@ -20,7 +20,11 @@ const _lib = require('./lib');
 
 function _interopRequireDefault (obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-module.exports = function (html, callback) {
+module.exports = function (params, callback) {
+
+  const html = typeof(params)==='string'?params:params['html'];
+  const update = typeof(params)==='string'?()=>{}:params['update'];
+
   const options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
   _juice2.default.juiceResources(html, options.juice || {}, function (err, text) {
@@ -29,6 +33,7 @@ module.exports = function (html, callback) {
     const file = new _betterXlsx2.default.File();
     const $ = _cheerio2.default.load(text);
 
+    update(25);
     $('table').each(function (ti, table) {
       //  MSB - added ability to name the tabs
       const sheetName = $(table).attr('title') ? $(table).attr('title') : `Sheet${ti + 1}`;
@@ -36,6 +41,7 @@ module.exports = function (html, callback) {
 
       let maxW = [];
       let offsets = [];
+      update(50);
       $('tr', table).each(function (hi, th) {
         if (offsets[hi] === undefined) {
           offsets[hi] = 0;
@@ -180,6 +186,9 @@ module.exports = function (html, callback) {
         //  MSB removed so that calls height is automatic
         //     sheet.rows[hi].setHeightCM(maxH * 0.03528);
       });
+
+      update(75);
+
       // Set col width
       for (let i = 0; i < maxW.length; i++) {
         const w = maxW[i];
@@ -187,6 +196,9 @@ module.exports = function (html, callback) {
           sheet.col(i).width = w;
         }
       }
+
+      update(100);
+
     });
 
     callback(null, file);
